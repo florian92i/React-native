@@ -1,28 +1,50 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import { AppRegistry, ScrollView, Image, Text } from 'react-native';
 
-class Greeting extends Component {
+export default class IScrolledDownAndWhatHappenedNextShockedMe extends Component {
   render() {
-    return (
-      <Text>Hello {this.props.name} ok ok!</Text>
+    let pic = {
+    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+      return (
+        <ScrollView>
+          <Text style={{fontSize:96}}>Scroll me plz</Text>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+          <Text style={{fontSize:96}}>If you like</Text>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+          <Text style={{fontSize:96}}>Scrolling down</Text>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+          <Text style={{fontSize:96}}>What s the best</Text>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+          <Text style={{fontSize:96}}>Framework around?</Text>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+             <Image source={pic} style={{width: 193, height: 110}}/>
+          <Text style={{fontSize:80}}>React Native</Text>
+        </ScrollView>
     );
   }
 }
 
-export default class LotsOfGreetings extends Component {
-  render() {
-    return (
-      <View style={{alignItems: 'center'}}>
-        <Greeting name='Rexxar' />
-        <Greeting name='Jaina' />
-        <Greeting name='Valeera' />
-      </View>
-    );
-  }
-}
-
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => LotsOfGreetings);
-
-// On a crée une classe Greeting qui marche comme un systeme de composant et qui va donc crée un template pour ensuite l'afficher
-//On pressise le nom avec Greeting name='Rexxar' 
+// skip these lines if using Create React Native App
+AppRegistry.registerComponent(
+  'AwesomeProject',
+  () => IScrolledDownAndWhatHappenedNextShockedMe);
