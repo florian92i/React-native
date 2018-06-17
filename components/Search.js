@@ -46,7 +46,6 @@ class Search extends React.Component {
           }
 //---------------------------------- function pour utiliser l'api ----------------------------------//
 
-//permet
 _searchFilms() {
  this.page = 0
  this.totalPages = 0
@@ -100,7 +99,7 @@ _searchFilms() {
            data={this.state.films}
            keyExtractor={(item) => item.id.toString()}
            renderItem={({item}) => <FilmItem film={item}/>}
-           onEndReachedThreshold={0.2} //
+           onEndReachedThreshold={0.5} //
            onEndReached={() => {
               if (this.state.films.length > 0 && this.page < this.totalPages) { // On vérifie également qu'on n'a pas atteint la fin de la pagination (totalPages) avant de charger plus d'éléments
                  this._loadFilms()

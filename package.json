@@ -23,6 +23,7 @@
     "native-base": "^2.4.5",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-navigation": "^2.3.1",
     "watchman": "^1.0.0",
     "yarn": "^1.7.0"
   }
