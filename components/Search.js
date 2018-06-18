@@ -22,6 +22,12 @@ class Search extends React.Component {
       nosearch:false,
      }
   }
+  //---------------------------------- Permet la navigation ----------------------------------//
+
+  _displayDetailForFilm = (idFilm) => {
+      console.log("Display film with id " + idFilm)
+      this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+  }
 //---------------------------------- load & if pas de film ----------------------------------//
   _displayLoading() {
         if (this.state.isLoading) {
@@ -60,7 +66,7 @@ _searchFilms() {
  _loadFilms() {
   // console.log(this.searchedText) // Un log pour vérifier qu'on a bien le texte du TextInput
    if (this.searchedText.length > 0) { // Seulement si le texte recherché n'est pas vide
-     this.setState({ isLoading: true }) // Lancement du chargement
+     this.setState({ isLoading: true, nosearch: false }) // Lancement du chargement
      getFilmsFromApiWithSearchedText(this.searchedText, this.page+1).then(data => { //On incremente la page quand on appelle la function pour recupere au debut la 1er ensuite 2 ect ...
        //  console.log(data);
        // on utiliser la function stocker dans le TMDBApi lorsque que getFilmsFromApiWithSearchedText se fini callback et on remplie le tableau vide du
@@ -84,6 +90,7 @@ _searchFilms() {
 
   render() {
   //  console.log("RENDER")
+//  console.log(this.props)
 
       return (
         <View style={styles.main_container}>
@@ -98,13 +105,14 @@ _searchFilms() {
          <FlatList
            data={this.state.films}
            keyExtractor={(item) => item.id.toString()}
-           renderItem={({item}) => <FilmItem film={item}/>}
            onEndReachedThreshold={0.5} //
            onEndReached={() => {
               if (this.state.films.length > 0 && this.page < this.totalPages) { // On vérifie également qu'on n'a pas atteint la fin de la pagination (totalPages) avant de charger plus d'éléments
                  this._loadFilms()
               }
           }}
+          renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
+
          />
          {this._displayLoading()}
 
