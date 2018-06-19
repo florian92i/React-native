@@ -8,7 +8,7 @@ class FilmDetail extends React.Component {
     return (
       <View style={styles.main_container}>
         <Text>Détail du film {this.props.navigation.state.params.idFilm}</Text>
-        <Text>ok {this.props.navigation.state.params.image}</Text>
+        <Text>oks {this.props.navigation.state.params.image}</Text>
 
       </View>
     )
