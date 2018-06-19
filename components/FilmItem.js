@@ -10,7 +10,7 @@ class FilmItem extends React.Component {
     return (
       <TouchableOpacity //La fonction  onPress  n'existe pas sur le component View donc on utilise TouchableOpacity
          style={styles.main_container}
-         onPress={() => displayDetailForFilm(film.id)}>
+         onPress={() => displayDetailForFilm(film.id,film.original_title)}>
       <Image
       style={styles.image}
       source={{uri: getImageFromApi(film.poster_path)}}

@@ -24,9 +24,11 @@ class Search extends React.Component {
   }
   //---------------------------------- Permet la navigation ----------------------------------//
 
-  _displayDetailForFilm = (idFilm) => {
+  _displayDetailForFilm = (idFilm,image) => {
       console.log("Display film with id " + idFilm)
-      this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+      console.log("Display film with id " + image)
+
+      this.props.navigation.navigate("FilmDetail", { idFilm: idFilm ,image:image })
   }
 //---------------------------------- load & if pas de film ----------------------------------//
   _displayLoading() {
@@ -91,7 +93,7 @@ _searchFilms() {
   render() {
   //  console.log("RENDER")
 //  console.log(this.props)
-
+console.log(this.state.films)
       return (
         <View style={styles.main_container}>
         <TextInput
