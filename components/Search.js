@@ -26,7 +26,6 @@ class Search extends React.Component {
 
   _displayDetailForFilm = (idFilm,image) => {
       console.log("Display film with id " + idFilm)
-      console.log("Display film with id " + image)
 
       this.props.navigation.navigate("FilmDetail", { idFilm: idFilm ,image:image })
   }
@@ -113,7 +112,7 @@ console.log(this.state.films)
                  this._loadFilms()
               }
           }}
-          renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
+          renderItem={({item}) => <FilmItem film={item} url={this.props} />}
 
          />
          {this._displayLoading()}

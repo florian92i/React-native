@@ -5,12 +5,14 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBApi'
 
 class FilmItem extends React.Component {
+
+
   render() {
-    const { film, displayDetailForFilm } = this.props
+    const { film,url } = this.props
     return (
       <TouchableOpacity //La fonction  onPress  n'existe pas sur le component View donc on utilise TouchableOpacity
          style={styles.main_container}
-         onPress={() => displayDetailForFilm(film.id,film.original_title)}>
+         onPress={() => url.navigation.navigate("FilmDetail", { idFilm: film.id ,image: film.title })}>
       <Image
       style={styles.image}
       source={{uri: getImageFromApi(film.poster_path)}}

@@ -4,6 +4,7 @@
 import { createStackNavigator } from 'react-navigation'
 import Search from '../components/Search'
 import FilmDetail from '../components/FilmDetail'
+import FilmItem from '../components/FilmItem'
 
 
 const SearchStackNavigator = createStackNavigator({
