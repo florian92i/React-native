@@ -5,6 +5,14 @@ import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image } from 're
 import { getFilmDetailFromApi, getImageFromApi } from '../API/TMDBApi'
 import moment from 'moment'
 import numeral from 'numeral'
+import { connect } from 'react-redux' // . On va connecter le store à notre component FilmDetail.
+
+
+const mapStateToProps = (state) => {
+  return {
+     favoritesFilm: state.favoritesFilm
+   }
+ }
 
 class FilmDetail extends React.Component {
   constructor(props) {
@@ -16,9 +24,10 @@ class FilmDetail extends React.Component {
   }
 
 
+
   componentDidMount() { // La méthode  componentDidMount  est appelé quand votre component a fini d'être rendu.
   //Si vous souhaitez effectuer des opérations juste après que votre component soit rendu, c'est ici que vous pourrez les faire.
-    console.log("Component FilmDetail monté")
+    //console.log("Component FilmDetail monté")
 
           getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
             this.setState({
@@ -69,6 +78,8 @@ class FilmDetail extends React.Component {
 
 
   render() {
+    console.log(this.props)
+
       return (
         <View style={styles.main_container}>
           {this._displayLoading()}
@@ -123,4 +134,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilmDetail
+export default connect(mapStateToProps)(FilmDetail)
