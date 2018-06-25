@@ -4,6 +4,7 @@ import React from 'react'
 //import films from '../Helpers/filmsData'
 import FilmItem from './FilmItem'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi' // import { } from ... car c'est un export nommé dans TMDBApi.js
+import { connect } from 'react-redux'
 
 
 
@@ -25,8 +26,8 @@ class Search extends React.Component {
   //---------------------------------- Permet la navigation ----------------------------------//
 
   _displayDetailForFilm = (idFilm,image) => {
-      console.log("Display film with id " + idFilm)
-      console.log("Display film with id " + image)
+      //console.log("Display film with id " + idFilm)
+      //console.log("Display film with id " + image)
 
       this.props.navigation.navigate("FilmDetail", { idFilm: idFilm ,image:image })
   }
@@ -60,17 +61,17 @@ _searchFilms() {
  this.setState({ //setState  possède un paramètre  callback  qui permet d'exécuter une action dès que notre state a fini de se mettre à jour
    films: [],
  }, () => {
-     //console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.films.length)
+     ////console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.films.length)
      this._loadFilms()
  })
 }
 
  _loadFilms() {
-  // console.log(this.searchedText) // Un log pour vérifier qu'on a bien le texte du TextInput
+  // //console.log(this.searchedText) // Un log pour vérifier qu'on a bien le texte du TextInput
    if (this.searchedText.length > 0) { // Seulement si le texte recherché n'est pas vide
      this.setState({ isLoading: true, nosearch: false }) // Lancement du chargement
      getFilmsFromApiWithSearchedText(this.searchedText, this.page+1).then(data => { //On incremente la page quand on appelle la function pour recupere au debut la 1er ensuite 2 ect ...
-       //  console.log(data);
+       //  //console.log(data);
        // on utiliser la function stocker dans le TMDBApi lorsque que getFilmsFromApiWithSearchedText se fini callback et on remplie le tableau vide du
        // resultats de l'api
          this.page = data.page
@@ -91,9 +92,9 @@ _searchFilms() {
 //---------------------------------- Ce qu'il va s'afficher a l'ecran ----------------------------------//
 
   render() {
-  //  console.log("RENDER")
-//  console.log(this.props)
-console.log(this.state.films)
+  //  //console.log("RENDER")
+//  //console.log(this.props)
+//console.log(this.state.films)
       return (
         <View style={styles.main_container}>
         <TextInput
@@ -105,15 +106,23 @@ console.log(this.state.films)
         />
          <Button style={{ height: 50 }} title='Rechercher' onPress={() => this._searchFilms()}/>
          <FlatList
-           data={this.state.films}
-           keyExtractor={(item) => item.id.toString()}
-           onEndReachedThreshold={0.5} //
-           onEndReached={() => {
-              if (this.state.films.length > 0 && this.page < this.totalPages) { // On vérifie également qu'on n'a pas atteint la fin de la pagination (totalPages) avant de charger plus d'éléments
-                 this._loadFilms()
-              }
-          }}
-          renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
+         data={this.state.films}
+         keyExtractor={(item) => item.id.toString()}
+         renderItem={({item}) =>
+           <FilmItem
+             film={item}
+             // Ajout d'une props isFilmFavorite pour indiquer à l'item d'afficher un 🖤 ou non
+             isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false}
+             displayDetailForFilm={this._displayDetailForFilm}
+           />
+         }
+         onEndReachedThreshold={0.5}
+         onEndReached={() => {
+             if (this.state.films.length > 0 && this.page < this.totalPages) { // On vérifie également qu'on n'a pas atteint la fin de la pagination (totalPages) avant de charger plus d'éléments
+                this._loadFilms()
+             }
+         }}
+       />
 
          />
          {this._displayLoading()}
@@ -152,4 +161,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Search
+const mapStateToProps = state => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+
+export default connect(mapStateToProps)(Search)

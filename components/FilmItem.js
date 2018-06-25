@@ -3,12 +3,26 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBApi'
+import { connect } from 'react-redux' // . On va connecter le store à notre component FilmDetail.
 
 class FilmItem extends React.Component {
 
-  
+  _displayFavoriteImage() {
+    if (this.props.isFilmFavorite) {
+      // Si la props isFilmFavorite vaut true, on affiche le 🖤
+      return (
+        <Image
+          style={styles.favorite_image}
+          source={require('../Images/ic_favorite.png')}
+        />
+      )
+    }
+  }
+
+
   render() {
     const { film, displayDetailForFilm } = this.props
+    console.log(this.props)
     return (
       <TouchableOpacity //La fonction  onPress  n'existe pas sur le component View donc on utilise TouchableOpacity
          style={styles.main_container}
@@ -19,6 +33,7 @@ class FilmItem extends React.Component {
       />
         <View style={styles.content_container}>
           <View style={styles.header_container}>
+            {this._displayFavoriteImage()}
             <Text style={styles.title_text}>{film.title}</Text>
             <Text style={styles.vote_text}>{film.vote_average}</Text>
           </View>
@@ -81,4 +96,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilmItem
+const mapStateToProps = (state) => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+export default connect(mapStateToProps)(FilmItem)
+//Dès lors que vous utilisez la fonction  connect  sur un component, Redux va mapper la fonction  dispatch  à votre component.
