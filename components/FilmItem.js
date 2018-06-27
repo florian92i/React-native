@@ -60,6 +60,10 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: 'gray'
   },
+  favorite_image: {
+    width: 40,
+    height: 40
+  },
   content_container: {
     flex: 1,
     margin: 5
