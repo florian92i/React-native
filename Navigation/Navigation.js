@@ -23,7 +23,7 @@ const SearchStackNavigator = createStackNavigator({
 const MoviesTabNavigator = createBottomTabNavigator(
   {
     Search: {
-      screen: SearchStackNavigator,    //  ajoute une navigation dans un onglet et faire ce qu'on appelle une combinaison de navigation 
+      screen: SearchStackNavigator,    //  ajoute une navigation dans un onglet et faire ce qu'on appelle une combinaison de navigation   
       navigationOptions: {
         tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
           return <Image
