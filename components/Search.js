@@ -3,8 +3,10 @@
 import React from 'react'
 //import films from '../Helpers/filmsData'
 import FilmItem from './FilmItem'
+import FilmList from './FilmList'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi' // import { } from ... car c'est un export nommé dans TMDBApi.js
 import { connect } from 'react-redux'
+import { Keyboard } from 'react-native'
 
 
 
@@ -23,14 +25,14 @@ class Search extends React.Component {
       nosearch:false,
      }
   }
+
+
   //---------------------------------- Permet la navigation ----------------------------------//
 
-  _displayDetailForFilm = (idFilm,image) => {
-      //console.log("Display film with id " + idFilm)
-      //console.log("Display film with id " + image)
-
-      this.props.navigation.navigate("FilmDetail", { idFilm: idFilm ,image:image })
-  }
+  _displayDetailForFilm = (idFilm) => {
+     console.log("Display film with id " + idFilm)
+     this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+   }
 //---------------------------------- load & if pas de film ----------------------------------//
   _displayLoading() {
         if (this.state.isLoading) {
@@ -67,6 +69,9 @@ _searchFilms() {
 }
 
  _loadFilms() {
+
+// Hide that keyboard!
+  Keyboard.dismiss()
   // //console.log(this.searchedText) // Un log pour vérifier qu'on a bien le texte du TextInput
    if (this.searchedText.length > 0) { // Seulement si le texte recherché n'est pas vide
      this.setState({ isLoading: true, nosearch: false }) // Lancement du chargement
@@ -101,20 +106,19 @@ _searchFilms() {
           style={styles.textinput}
           placeholder='Titre du film'
           onChangeText={(text) => this._searchTextInputChanged(text)}
-          onSubmitEditing={() => this._loadFilms()} //le bouton "Envoyer" du clavier pour valider un TextInput
+          returnKeyType = { "send" } // permet de modifier le texte du bouton d'envoi send
+          onSubmitEditing={() => this._searchFilms()}
 
         />
          <Button style={{ height: 50 }} title='Rechercher' onPress={() => this._searchFilms()}/>
-         <FlatList
-         data={this.state.films}
-         keyExtractor={(item) => item.id.toString()}
-         renderItem={({item}) =>
-           <FilmItem
-             film={item}
-             // Ajout d'une props isFilmFavorite pour indiquer à l'item d'afficher un 🖤 ou non
-             isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false}
-             displayDetailForFilm={this._displayDetailForFilm}
-           />
+         <FilmList
+         films={this.state.films}
+         navigation={this.props.navigation}
+         loadFilms={this._loadFilms}
+         page={this.page}
+         totalPages={this.totalPages}
+         favoriteList={false} // Ici j'ai simplement ajouté un booléen à false pour indiquer qu'on n'est pas dans le cas de l'affichage de la liste des films favoris. Et ainsi pouvoir déclencher le chargement de plus de films lorsque l'utilisateur scrolle.
+       />
          }
          onEndReachedThreshold={0.5}
          onEndReached={() => {
@@ -161,11 +165,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => {
-  return {
-    favoritesFilm: state.favoritesFilm
-  }
-}
 
 
-export default connect(mapStateToProps)(Search)
+
+export default Search
